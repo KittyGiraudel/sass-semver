@@ -30,3 +30,9 @@ Implements the following method:
   Returns whether `$v1` is not equal to `$v2` (i.e. `$v1 != $v2`).
 * `cmp($v1, $comparator, $v2)`  
   Calls the corresponding function above depending on which `$comparator` is being given.
+
+## Tests
+
+```sh
+npm test
+```
