@@ -140,7 +140,7 @@
 ///   $lt: lt('1.2.3', '0.1.2');
 ///   -> false
 @function lt($v1, $v2) {
-  @return not eq($v1, $v2) and not gt($v1, $v2);
+  @return $v1 != $v2 and not gt($v1, $v2);
 }
 
 /// Return whether the first version is greater than or equal to the second
@@ -155,7 +155,7 @@
 ///   $gte: gte('1.2.3', '0.1.2');
 ///   -> true
 @function gte($v1, $v2) {
-  @return eq($v1, $v2) or gt($v1, $v2);
+  @return $v1 == $v2 or gt($v1, $v2);
 }
 
 /// Return whether the first version is lesser than or equal to the second
@@ -170,7 +170,7 @@
 ///   $lte: lte('1.2.3', '0.1.2');
 ///   -> false
 @function lte($v1, $v2) {
-  @return eq($v1, $v2) or lt($v1, $v2);
+  @return $v1 == $v2 or lt($v1, $v2);
 }
 
 /// Return whether the first version is not equal to the second
