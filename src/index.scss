@@ -38,9 +38,9 @@
 ///   $version: inc('1.2.3', 'patch');
 ///   -> '1.2.4'
 ///   $version: inc('1.2.3', 'prerelease', 'alpha');
-///   -> '1.2.3.alpha.0'
-///   $version: inc('1.2.3.alpha.0', 'prerelease',);
-///   -> '1.2.3.alpha.1'
+///   -> '1.2.3-alpha.0'
+///   $version: inc('1.2.3-alpha.0', 'prerelease',);
+///   -> '1.2.3-alpha.1'
 @function inc($version, $release, $prerelease: 'beta') {
   $release: to-lower-case($release);
   $incremented-version:
@@ -50,7 +50,7 @@
 
   @if ($release == 'prerelease') {
     $prerelease-data: _prerelease($version);
-    $incremented-version: $incremented-version + '.' +
+    $incremented-version: $incremented-version + '-' +
       (map-get($prerelease-data, 'name') or $prerelease) + '.' +
       (map-get($prerelease-data, 'number') + 1);
   }

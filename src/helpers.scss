@@ -14,7 +14,7 @@
 /// @example scss
 ///   $prerelease: _prerelease('1.2.3');
 ///    -> ( 'name': null, 'number': -1 )
-///   $prerelease: _prerelease('1.2.3.alpha.0');
+///   $prerelease: _prerelease('1.2.3-alpha.0');
 ///    -> ( 'name': 'alpha', 'number': 0 )
 @function _prerelease($version) {
   @if str-length($version) < 7 {
