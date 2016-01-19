@@ -2,7 +2,11 @@
 
 A Sass implementation of [node-semver](https://github.com/npm/node-semver). This project is inspired by [sass-deprecate](https://github.com/salesforce-ux/sass-deprecate) from Salesforce.
 
-Implements the following method:
+```sh
+npm install sass-semver
+```
+
+## Public API
 
 * `valid($version)`  
   Returns whether `$version` a is valid SemVer version.
