@@ -1,6 +1,6 @@
 # Sass SemVer
 
-A Sass implementation of [node-semver](https://github.com/npm/node-semver).
+A Sass implementation of [node-semver](https://github.com/npm/node-semver). This project is inspired by [sass-deprecate](https://github.com/salesforce-ux/sass-deprecate) from Salesforce.
 
 Implements the following method:
 
