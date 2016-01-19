@@ -23,12 +23,10 @@
 ///   $not-valid: valid('a.b.c');
 ///   -> false
 @function valid($version) {
-  @return type-of(major($version)) == 'number' and
-    str-slice($version, 2, 2) == '.' and
+  @return str-index($version, '.') != null and
+    type-of(major($version)) == 'number' and
     type-of(minor($version)) == 'number' and
-    str-slice($version, 4, 4) == '.' and
-    type-of(patch($version)) == 'number' and
-    (str-slice($version, 6, 6) == '' or str-slice($version, 6, 6) == '-');
+    type-of(patch($version)) == 'number';
 }
 
 /// Return the version incremented by the release type (major, minor, patch, prerelease)
@@ -94,7 +92,7 @@
 ///   $major: major('1.2.3');
 ///   -> 1
 @function major($version) {
-  @return _to-number(str-slice($version, 1, 1));
+  @return _to-number(str-slice($version, 1, str-index($version, '.') - 1));
 }
 
 /// Return the minor version number
@@ -104,7 +102,9 @@
 ///   $minor: minor('1.2.3');
 ///   -> 2
 @function minor($version) {
-  @return _to-number(str-slice($version, 3, 3));
+  $first-dot-index: str-index($version, '.');
+  $chunk: str-slice($version, $first-dot-index + 1);
+  @return _to-number(str-slice($chunk, 1, str-index($chunk, '.') - 1));
 }
 
 /// Return the patch version number
@@ -114,7 +114,10 @@
 ///   $patch: patch('1.2.3');
 ///   -> 3
 @function patch($version) {
-  @return _to-number(str-slice($version, 5, 5));
+  $first-chunk: str-slice($version, str-index($version, '.') + 1);
+  $second-chunk: str-slice($first-chunk, str-index($first-chunk, '.') + 1);
+  $end: if(str-length($second-chunk) > 1, (str-index($second-chunk, '-') or 0) - 1, 1);
+  @return _to-number(str-slice($second-chunk, 1, $end));
 }
 
 /// Return whether the first version is greater than the second
