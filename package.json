@@ -9,6 +9,10 @@
   },
   "license": "MIT",
   "repository": "https://github.com/HugoGiraudel/sass-semver",
+  "eyeglass": {
+    "name": "sass-semver",
+    "exports": "eyeglass-exports.js"
+  },
   "devDependencies": {
     "mocha": "^2.3.4",
     "sass-true": "^2.0.3"
