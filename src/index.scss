@@ -1,0 +1,226 @@
+@function _sv-to-number($value) {
+  $numbers: ('0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9);
+  @return map-get($numbers, $value);
+}
+
+/// Remove leading `v` or `=` from $version
+/// @param {String} $version
+/// @return {String}
+/// @example scss
+///   $version: clean('v1.2.3');
+///   -> '1.2.3'
+@function clean($version) {
+  @if index('v' '=', str-slice($version, 1, 1)) {
+    @return str-slice($version, 2);
+  }
+
+  @return $version;
+}
+
+/// Return whether $version is valid SemVer
+/// @param {String} $version
+/// @return {Boolean}
+/// @example scss
+///   $valid: valid('1.2.3');
+///   -> true
+///   $not-valid: valid('a.b.c');
+///   -> false
+/// @todo Implement prerelease checks
+@function valid($version) {
+  @return str-length($version) == 5 and str-index($version, '.') == 2;
+}
+
+/// Return the version incremented by the release type (major, minor, patch, prerelease)
+/// @param {String} $version
+/// @param {String} $release - Type of release to bump (major, minor, patch, prerelease)
+/// @return {String}
+/// @example scss
+///   $version: inc('1.2.3', 'major');
+///   -> '2.2.3'
+///   $version: inc('1.2.3', 'minor');
+///   -> '1.3.3'
+///   $version: inc('1.2.3', 'patch');
+///   -> '1.2.4'
+///   $version: inc('1.2.3', 'prerelease', 'alpha');
+///   -> '1.2.3.alpha'
+@function inc($version, $release, $pre-release: 'beta') {
+  $release: to-lower-case($release);
+  $incremented-version:
+    major($version) + if($release == 'major', 1, 0) + '.' +
+    minor($version) + if($release == 'minor', 1, 0) + '.' +
+    patch($version) + if($release == 'patch', 1, 0);
+
+  @if ($release == 'prerelease') {
+    $incremented-version: $incremented-version + '.' + $pre-release;
+  }
+
+  @return $incremented-version;
+}
+
+/// Return the major version number
+/// @param {String} $version
+/// @return {Number}
+/// @example scss
+///   $major: major('1.2.3');
+///   -> 1
+@function major($version) {
+  @return _sv-to-number(str-slice($version, 1, 1));
+}
+
+/// Return the minor version number
+/// @param {String} $version
+/// @return {Number}
+/// @example scss
+///   $minor: minor('1.2.3');
+///   -> 2
+@function minor($version) {
+  @return _sv-to-number(str-slice($version, 3, 3));
+}
+
+/// Return the patch version number
+/// @param {String} $version
+/// @return {Number}
+/// @example scss
+///   $patch: patch('1.2.3');
+///   -> 3
+@function patch($version) {
+  @return _sv-to-number(str-slice($version, 5, 5));
+}
+
+/// Return whether the first version is greater than the second
+/// @param {String} $v1
+/// @param {String} $v2
+/// @return {Boolean}
+/// @example scss
+///   $gt: gt('1.2.3', '3.2.1');
+///   -> false
+///   $gt: gt('1.2.3', '1.2.3');
+///   -> false
+///   $gt: gt('1.2.3', '0.1.2');
+///   -> true
+@function gt($v1, $v2) {
+  @if $v1 == $v2 {
+    @return false;
+  }
+
+  $major-v1: major($v1);
+  $major-v2: major($v2);
+  $minor-v1: minor($v1);
+  $minor-v2: minor($v2);
+
+  @return ($major-v1 > $major-v2)
+    or ($major-v1 == $major-v2 and $minor-v1 > $minor-v2)
+    or ($major-v1 == $major-v2 and $minor-v1 == $minor-v2 and patch($v1) > patch($v2));
+}
+
+/// Return whether the first version is equal to the second
+/// @param {String} $v1
+/// @param {String} $v2
+/// @return {Boolean}
+/// @example scss
+///   $eq: eq('1.2.3', '3.2.1');
+///   -> false
+///   $eq: eq('1.2.3', '1.2.3');
+///   -> true
+///   $eq: eq('1.2.3', '0.1.2');
+///   -> false
+@function eq($v1, $v2) {
+  @return $v1 == $v2;
+}
+
+/// Return whether the first version is lesser than the second
+/// @param {String} $v1
+/// @param {String} $v2
+/// @return {Boolean}
+/// @example scss
+///   $lt: lt('1.2.3', '3.2.1');
+///   -> true
+///   $lt: lt('1.2.3', '1.2.3');
+///   -> false
+///   $lt: lt('1.2.3', '0.1.2');
+///   -> false
+@function lt($v1, $v2) {
+  @return not eq($v1, $v2) and not gt($v1, $v2);
+}
+
+/// Return whether the first version is greater than or equal to the second
+/// @param {String} $v1
+/// @param {String} $v2
+/// @return {Boolean}
+/// @example scss
+///   $gte: gte('1.2.3', '3.2.1');
+///   -> false
+///   $gte: gte('1.2.3', '1.2.3');
+///   -> true
+///   $gte: gte('1.2.3', '0.1.2');
+///   -> true
+@function gte($v1, $v2) {
+  @return eq($v1, $v2) or gt($v1, $v2);
+}
+
+/// Return whether the first version is lesser than or equal to the second
+/// @param {String} $v1
+/// @param {String} $v2
+/// @return {Boolean}
+/// @example scss
+///   $lte: lte('1.2.3', '3.2.1');
+///   -> true
+///   $lte: lte('1.2.3', '1.2.3');
+///   -> true
+///   $lte: lte('1.2.3', '0.1.2');
+///   -> false
+@function lte($v1, $v2) {
+  @return eq($v1, $v2) or lt($v1, $v2);
+}
+
+/// Return whether the first version is not equal to the second
+/// @param {String} $v1
+/// @param {String} $v2
+/// @return {Boolean}
+/// @example scss
+///   $eq: eq('1.2.3', '3.2.1');
+///   -> true
+///   $eq: eq('1.2.3', '1.2.3');
+///   -> false
+///   $eq: eq('1.2.3', '0.1.2');
+///   -> true
+@function neq($v1, $v2) {
+  @return $v1 != $v2;
+}
+
+/// Pass in a comparison string, and it will call the corresponding function.
+/// @param {String} $v1
+/// @param {String} $comparator
+/// @param {String} $v2
+/// @return {Boolean}
+/// @example scss
+///   $cmp: cmp('1.2.3', '==', '0.1.2');
+///   -> false
+///   $cmp: cmp('1.2.3', '===', '0.1.2');
+///   -> false
+///   $cmp: cmp('1.2.3', '>', '0.1.2');
+///   -> true
+///   $cmp: cmp('1.2.3', '>=', '0.1.2');
+///   -> true
+///   $cmp: cmp('1.2.3', '!=', '0.1.2');
+///   -> true
+///   $cmp: cmp('1.2.3', '!==', '0.1.2');
+///   -> true
+///   $cmp: cmp('1.2.3', '<', '0.1.2');
+///   -> false
+///   $cmp: cmp('1.2.3', '<=', '0.1.2');
+///   -> false
+@function cmp($v1, $comparator, $v2) {
+  $mapping: (
+    '==': 'eq',
+    '===': 'eq',
+    '!=': 'neq',
+    '!==': 'neq',
+    '>': 'gt',
+    '>=': 'gte',
+    '<': 'lt',
+    '<=': 'lte',
+  );
+
+  @return call(map-get($mapping, $comparator), $v1, $v2);
+}
