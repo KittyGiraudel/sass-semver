@@ -4,45 +4,37 @@
 @include test-module('sass-semver') {
 
   @include test('clean(..)') {
-    $base: 'v1.2.3';
-    $test: clean($base);
+    $test: clean('v1.2.3');
     $expect: '1.2.3';
     @include assert-equal($test, $expect, 'Gets rid off the leading `v`.');
 
-    $base: '=1.2.3';
-    $test: clean($base);
+    $test: clean('=1.2.3');
     $expect: '1.2.3';
     @include assert-equal($test, $expect, 'Gets rid off the leading `=`.');
   }
 
   @include test('valid(..)') {
-    $base: '1.2.3';
-    $test: valid($base);
+    $test: valid('1.2.3');
     $expect: true;
     @include assert-equal($test, $expect, 'Returns if version is valid.');
 
-    $base: '1.2.3-alpha';
-    $test: valid($base);
+    $test: valid('1.2.3-alpha');
     $expect: true;
     @include assert-equal($test, $expect, 'Returns if version is valid.');
 
-    $base: '1.2.3-alpha.0';
-    $test: valid($base);
+    $test: valid('1.2.3-alpha.0');
     $expect: true;
     @include assert-equal($test, $expect, 'Returns if version is valid.');
 
-    $base: 'a.b.c';
-    $test: valid($base);
+    $test: valid('a.b.c');
     $expect: false;
     @include assert-equal($test, $expect, 'Returns if version is valid.');
 
-    $base: '1.2.3.5';
-    $test: valid($base);
+    $test: valid('1.2.3.5');
     $expect: false;
     @include assert-equal($test, $expect, 'Returns if version is valid.');
 
-    $base: 'foobar';
-    $test: valid($base);
+    $test: valid('foobar');
     $expect: false;
     @include assert-equal($test, $expect, 'Returns if version is valid.');
   }
