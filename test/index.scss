@@ -81,17 +81,29 @@
     $test: major('1.2.3');
     $expect: 1;
     @include assert-equal($test, $expect, 'Returns the major component of a version.');
+
+    $test: major('10.2.3');
+    $expect: 10;
+    @include assert-equal($test, $expect, 'Returns the major component of a version.');
   }
 
   @include test('minor(..)') {
     $test: minor('1.2.3');
     $expect: 2;
     @include assert-equal($test, $expect, 'Returns the minor component of a version.');
+
+    $test: minor('1.20.3');
+    $expect: 20;
+    @include assert-equal($test, $expect, 'Returns the minor component of a version.');
   }
 
   @include test('patch(..)') {
     $test: patch('1.2.3');
     $expect: 3;
+    @include assert-equal($test, $expect, 'Returns the patch component of a version.');
+
+    $test: patch('1.2.30');
+    $expect: 30;
     @include assert-equal($test, $expect, 'Returns the patch component of a version.');
   }
 
@@ -203,6 +215,30 @@
     $test: cmp('1.2.3', '<=', '0.1.2');
     $expect: false;
     @include assert-equal($test, $expect, 'Compare both versions.');
+  }
+
+  @include test('_to-number(..)') {
+    $test: _to-number('0');
+    $expect: 0;
+    @include assert-equal($test, $expect, 'Convert a string to a number.');
+
+    $test: _to-number('300');
+    $expect: 300;
+    @include assert-equal($test, $expect, 'Convert a string to a number.');
+
+    $test: _to-number('a');
+    $expect: false;
+    @include assert-equal($test, $expect, 'Convert a string to a number.');
+  }
+
+  @include test('_prerelease(..)') {
+    $test: _prerelease('1.2.3');
+    $expect: ('name': null, 'number': -1);
+    @include assert-equal($test, $expect, 'Parse the prerelease of a version.');
+
+    $test: _prerelease('1.2.3.alpha.0');
+    $expect: ('name': 'alpha', 'number': 0);
+    @include assert-equal($test, $expect, 'Parse the prerelease of a version.');
   }
 
 }
