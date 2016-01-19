@@ -23,7 +23,12 @@
 ///   $not-valid: valid('a.b.c');
 ///   -> false
 @function valid($version) {
-  @return str-slice($version, 2, 2) == '.' and str-slice($version, 4, 4) == '.';
+  @return type-of(major($version)) == 'number' and
+    str-slice($version, 2, 2) == '.' and
+    type-of(minor($version)) == 'number' and
+    str-slice($version, 4, 4) == '.' and
+    type-of(patch($version)) == 'number' and
+    (str-slice($version, 6, 6) == '' or str-slice($version, 6, 6) == '-');
 }
 
 /// Return the version incremented by the release type (major, minor, patch, prerelease)
