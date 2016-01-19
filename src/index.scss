@@ -39,15 +39,18 @@
 ///   -> '1.2.4'
 ///   $version: inc('1.2.3', 'prerelease', 'alpha');
 ///   -> '1.2.3.alpha'
-@function inc($version, $release, $pre-release: 'beta') {
+@function inc($version, $release, $prerelease: 'beta') {
   $release: to-lower-case($release);
   $incremented-version:
-    major($version) + if($release == 'major', 1, 0) + '.' +
-    minor($version) + if($release == 'minor', 1, 0) + '.' +
-    patch($version) + if($release == 'patch', 1, 0);
+    (major($version) + if($release == 'major', 1, 0)) + '.' +
+    (minor($version) + if($release == 'minor', 1, 0)) + '.' +
+    (patch($version) + if($release == 'patch', 1, 0));
 
   @if ($release == 'prerelease') {
-    $incremented-version: $incremented-version + '.' + $pre-release;
+    $prerelease-data: _prerelease($version);
+    $incremented-version: $incremented-version + '.' +
+      (map-get($prerelease-data, 'name') or $prerelease) + '.' +
+      (map-get($prerelease-data, 'number') + 1);
   }
 
   @return $incremented-version;
@@ -60,7 +63,7 @@
 ///   $major: major('1.2.3');
 ///   -> 1
 @function major($version) {
-  @return _sv-to-number(str-slice($version, 1, 1));
+  @return _to-number(str-slice($version, 1, 1));
 }
 
 /// Return the minor version number
@@ -70,7 +73,7 @@
 ///   $minor: minor('1.2.3');
 ///   -> 2
 @function minor($version) {
-  @return _sv-to-number(str-slice($version, 3, 3));
+  @return _to-number(str-slice($version, 3, 3));
 }
 
 /// Return the patch version number
@@ -80,7 +83,7 @@
 ///   $patch: patch('1.2.3');
 ///   -> 3
 @function patch($version) {
-  @return _sv-to-number(str-slice($version, 5, 5));
+  @return _to-number(str-slice($version, 5, 5));
 }
 
 /// Return whether the first version is greater than the second

@@ -2,7 +2,32 @@
 /// @access private
 /// @param {String} $value
 /// @return {Number}
-@function _sv-to-number($value) {
+@function _to-number($value) {
   $numbers: ('0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9);
   @return map-get($numbers, $value);
+}
+
+/// Parse the prerelease of $version
+/// @access private
+/// @param {String} $version
+/// @return {Map}
+/// @example scss
+///   $prerelease: _prerelease('1.2.3');
+///    -> ( 'name': null, 'number': -1 )
+///   $prerelease: _prerelease('1.2.3.alpha.0');
+///    -> ( 'name': 'alpha', 'number': 0 )
+@function _prerelease($version) {
+  @if str-length($version) < 7 {
+    @return (
+      'name': null,
+      'number': -1
+    );
+  }
+
+  $prerelease: str-slice($version, 7);
+
+  @return (
+    'name': str-slice($prerelease, 1, str-index($prerelease, '.') - 1),
+    'number': _to-number(str-slice($prerelease, -1))
+  );
 }
