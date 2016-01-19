@@ -1,8 +1,15 @@
 {
+  "name": "sass-semver",
+  "version": "1.0.0",
+  "author": "Hugo Giraudel",
+  "description": "A lightweight semantic version parser in Sass.",
+  "main": "src/index.scss",
   "scripts": {
     "test": "mocha test/index.js"
   },
-  "dependencies": {
+  "license": "MIT",
+  "repository": "https://github.com/HugoGiraudel/sass-semver",
+  "devDependencies": {
     "mocha": "^2.3.4",
     "sass-true": "^2.0.3"
   }
