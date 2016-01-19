@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "test": "mocha test/index.js"
+  },
+  "dependencies": {
+    "mocha": "^2.3.4",
+    "sass-true": "^2.0.3"
+  }
+}
