@@ -32,23 +32,47 @@
 /// @return {String}
 /// @example scss
 ///   $version: inc('1.2.3', 'major');
-///   -> '2.2.3'
+///   -> '2.0.0'
 ///   $version: inc('1.2.3', 'minor');
-///   -> '1.3.3'
+///   -> '1.3.0'
 ///   $version: inc('1.2.3', 'patch');
 ///   -> '1.2.4'
-///   $version: inc('1.2.3', 'prerelease', 'alpha');
-///   -> '1.2.3-alpha.0'
-///   $version: inc('1.2.3-alpha.0', 'prerelease',);
-///   -> '1.2.3-alpha.1'
+///   $version: inc('1.2.3', 'prerelease');
+///   -> '1.2.3-beta.0'
+///   $version: inc('1.2.3', 'prerelease', 'foobar');
+///   -> '1.2.3-foobar.0'
+///   $version: inc('1.2.3-foobar.0', 'prerelease');
+///   -> '1.2.3-foobar.1'
+///   $version: inc('1.2.3', 'premajor');
+///   -> '2.0.0-beta.0'
+///   $version: inc('1.2.3', 'preminor');
+///   -> '1.3.0-beta.0'
+///   $version: inc('1.2.3', 'prepatch');
+///   -> '1.2.4-beta.0'
 @function inc($version, $release, $prerelease: 'beta') {
   $release: to-lower-case($release);
-  $incremented-version:
-    (major($version) + if($release == 'major', 1, 0)) + '.' +
-    (minor($version) + if($release == 'minor', 1, 0)) + '.' +
-    (patch($version) + if($release == 'patch', 1, 0));
+  $major: major($version);
+  $minor: minor($version);
+  $patch: patch($version);
 
-  @if ($release == 'prerelease') {
+  @if ($release == 'major' or $release == 'premajor') {
+    $major: $major + 1;
+    $minor: 0;
+    $patch: 0;
+  }
+
+  @if ($release == 'minor' or $release == 'preminor') {
+    $minor: $minor + 1;
+    $patch: 0;
+  }
+
+  @if ($release == 'patch' or $release == 'prepatch') {
+    $patch: $patch + 1;
+  }
+
+  $incremented-version: $major + '.' + $minor + '.' + $patch;
+
+  @if (str-slice($release, 1, 3) == 'pre') {
     $prerelease-data: _prerelease($version);
     $incremented-version: $incremented-version + '-' +
       (map-get($prerelease-data, 'name') or $prerelease) + '.' +
