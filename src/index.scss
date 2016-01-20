@@ -155,9 +155,9 @@
 ///   $minor: minor('1.2.3');
 ///   -> 2
 @function minor($version) {
-  $first-dot-index: str-index($version, '.');
-  $chunk: str-slice($version, $first-dot-index + 1);
-  @return _to-number(str-slice($chunk, 1, str-index($chunk, '.') - 1));
+  $chunk: str-slice($version, str-index($version, '.') + 1);
+  $minor: str-slice($chunk, 1, str-index($chunk, '.') - 1);
+  @return _to-number($minor);
 }
 
 /// Return the patch version number
