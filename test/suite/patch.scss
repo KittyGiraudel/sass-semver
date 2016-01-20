@@ -1,9 +1,17 @@
 @include test('patch(..)') {
-  $test: patch('1.2.3');
-  $expect: 3;
-  @include assert-equal($test, $expect, 'Returns the patch component of a version.');
+  $tests: (
+    '1.2.3': 3,
+    '1.2.30': 30,
+    '1.2.300': 300,
+    '1.2.3-alpha': 3,
+    '1.2.30-alpha': 30,
+    '1.2.300-alpha': 300,
+    '1.2.3-alpha.0': 3,
+    '1.2.30-alpha.0': 30,
+    '1.2.300-alpha.0': 300,
+  );
 
-  $test: patch('1.2.30');
-  $expect: 30;
-  @include assert-equal($test, $expect, 'Returns the patch component of a version.');
+  @each $test, $expect in $tests {
+    @include assert-equal(patch($test), $expect, 'Returns the patch component of a version.');
+  }
 }

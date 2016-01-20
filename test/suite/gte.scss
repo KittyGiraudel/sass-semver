@@ -1,13 +1,11 @@
 @include test('gte(..)') {
-  $test: gte('1.2.3', '3.2.1');
-  $expect: false;
-  @include assert-equal($test, $expect, 'Returns whether v1 is greater than or equal to v2');
+  $tests: (
+    '3.2.1': false,
+    '1.2.3': true,
+    '0.1.2': true,
+  );
 
-  $test: gte('1.2.3', '1.2.3');
-  $expect: true;
-  @include assert-equal($test, $expect, 'Returns whether v1 is greater than or equal to v2');
-
-  $test: gte('1.2.3', '0.1.2');
-  $expect: true;
-  @include assert-equal($test, $expect, 'Returns whether v1 is greater than or equal to v2');
+  @each $test, $expect in $tests {
+    @include assert-equal(gte('1.2.3', $test), $expect, 'Returns whether v1 is greater than v2.');
+  }
 }

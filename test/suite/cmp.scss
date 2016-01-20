@@ -1,33 +1,16 @@
 @include test('cmp(..)') {
-  $test: cmp('1.2.3', '==', '0.1.2');
-  $expect: false;
-  @include assert-equal($test, $expect, 'Compare both versions.');
+  $tests: (
+    '==': false,
+    '===': false,
+    '>': true,
+    '>=': true,
+    '!=': true,
+    '!==': true,
+    '<': false,
+    '<=': false,
+  );
 
-  $test: cmp('1.2.3', '===', '0.1.2');
-  $expect: false;
-  @include assert-equal($test, $expect, 'Compare both versions.');
-
-  $test: cmp('1.2.3', '>', '0.1.2');
-  $expect: true;
-  @include assert-equal($test, $expect, 'Compare both versions.');
-
-  $test: cmp('1.2.3', '>=', '0.1.2');
-  $expect: true;
-  @include assert-equal($test, $expect, 'Compare both versions.');
-
-  $test: cmp('1.2.3', '!=', '0.1.2');
-  $expect: true;
-  @include assert-equal($test, $expect, 'Compare both versions.');
-
-  $test: cmp('1.2.3', '!==', '0.1.2');
-  $expect: true;
-  @include assert-equal($test, $expect, 'Compare both versions.');
-
-  $test: cmp('1.2.3', '<', '0.1.2');
-  $expect: false;
-  @include assert-equal($test, $expect, 'Compare both versions.');
-
-  $test: cmp('1.2.3', '<=', '0.1.2');
-  $expect: false;
-  @include assert-equal($test, $expect, 'Compare both versions.');
+  @each $test, $expect in $tests {
+    @include assert-equal(cmp('1.2.3', $test, '0.1.2'), $expect, 'Compare both versions.');
+  }
 }

@@ -1,9 +1,13 @@
 @include test('_prerelease(..)') {
-  $test: _prerelease('1.2.3');
-  $expect: ('name': null, 'number': -1);
-  @include assert-equal($test, $expect, 'Parse the prerelease of a version.');
+  $tests: (
+    '1.2.3' ( 'name': null, 'number': -1 ),
+    '1.2.3-alpha' ( 'name': 'alpha', 'number': -1 ),
+    '1.2.3-alpha.beta' ( 'name': 'alpha.beta', 'number': -1 ),
+    '1.2.3-alpha.beta.42' ( 'name': 'alpha.beta', 'number': 42 ),
+    '1.2.3-alpha.0' ( 'name': 'alpha', 'number': 0 ),
+  );
 
-  $test: _prerelease('1.2.3.alpha.0');
-  $expect: ('name': 'alpha', 'number': 0);
-  @include assert-equal($test, $expect, 'Parse the prerelease of a version.');
+  @each $test, $expect in $tests {
+    @include assert-equal(_prerelease($test), $expect, 'Parse the prerelease of a version.');
+  }
 }

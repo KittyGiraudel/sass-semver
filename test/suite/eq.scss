@@ -1,9 +1,10 @@
 @include test('eq(..)') {
-  $test: eq('1.2.3', '3.2.1');
-  $expect: false;
-  @include assert-equal($test, $expect, 'Returns whether v1 is equal to v2');
+  $tests: (
+    '3.2.1': false,
+    '1.2.3': true,
+  );
 
-  $test: eq('1.2.3', '1.2.3');
-  $expect: true;
-  @include assert-equal($test, $expect, 'Returns whether v1 is equal to v2');
+  @each $test, $expect in $tests {
+    @include assert-equal(eq('1.2.3', $test), $expect, 'Returns whether v1 is equal to v2.');
+  }
 }

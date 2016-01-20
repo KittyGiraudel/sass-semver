@@ -1,9 +1,17 @@
 @include test('major(..)') {
-  $test: major('1.2.3');
-  $expect: 1;
-  @include assert-equal($test, $expect, 'Returns the major component of a version.');
+  $tests: (
+    '1.2.3': 1,
+    '10.2.3': 10,
+    '100.2.3': 100,
+    '1.2.3-alpha': 1,
+    '10.2.3-alpha': 10,
+    '100.2.3-alpha': 100,
+    '1.2.3-alpha.0': 1,
+    '10.2.3-alpha.0': 10,
+    '100.2.3-alpha.0': 100,
+  );
 
-  $test: major('10.2.3');
-  $expect: 10;
-  @include assert-equal($test, $expect, 'Returns the major component of a version.');
+  @each $test, $expect in $tests {
+    @include assert-equal(major($test), $expect, 'Returns the major component of a version.');
+  }
 }

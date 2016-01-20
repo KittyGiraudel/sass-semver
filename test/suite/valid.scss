@@ -1,0 +1,14 @@
+@include test('valid(..)') {
+  $tests: (
+  '1.2.3': true,
+  '1.2.3-alpha': true,
+  '1.2.3-alpha.0': true,
+  'a.b.c': false,
+  '1.2.3.5': false,
+  'foobar': false,
+  );
+
+  @each $test, $expect in $tests {
+    @include assert-equal(valid($test), $expect, 'Returns if version is valid.');
+  }
+}

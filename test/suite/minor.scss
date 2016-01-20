@@ -1,9 +1,17 @@
 @include test('minor(..)') {
-  $test: minor('1.2.3');
-  $expect: 2;
-  @include assert-equal($test, $expect, 'Returns the minor component of a version.');
+  $tests: (
+    '1.2.3': 2,
+    '1.20.3': 20,
+    '1.200.3': 200,
+    '1.2.3-alpha': 2,
+    '1.20.3-alpha': 20,
+    '1.200.3-alpha': 200,
+    '1.2.3-alpha.0': 2,
+    '1.20.3-alpha.0': 20,
+    '1.200.3-alpha.0': 200,
+  );
 
-  $test: minor('1.20.3');
-  $expect: 20;
-  @include assert-equal($test, $expect, 'Returns the minor component of a version.');
+  @each $test, $expect in $tests {
+    @include assert-equal(minor($test), $expect, 'Returns the minor component of a version.');
+  }
 }

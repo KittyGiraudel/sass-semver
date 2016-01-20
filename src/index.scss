@@ -56,6 +56,26 @@
   @return 0;
 }
 
+/// Return last index of `$needle` in `$string`.
+/// @access private
+/// @param {String} $string - string to search in
+/// @param {String} $needle - substring to search for
+/// @return {Number}
+@function _str-last-index($string, $needle) {
+  $index: str-index($string, $needle);
+  $result: $index;
+
+  @if $index {
+    @for $i from $index + str-length($needle) through str-length($string) {
+      @if str-slice($string, $i, $i + str-length($needle) - 1) == $needle {
+        $result: $i;
+      }
+    }
+  }
+
+  @return $result;
+}
+
 
 
 /// Parse the prerelease of $version
@@ -68,18 +88,28 @@
 ///   $prerelease: _prerelease('1.2.3-alpha.0');
 ///    -> ( 'name': 'alpha', 'number': 0 )
 @function _prerelease($version) {
-  @if str-length($version) < 7 {
-    @return (
-      'name': null,
-      'number': -1
-    );
+  $name: null;
+  $number: -1;
+  $hyphen-index: str-index($version, '-');
+
+  @if ($hyphen-index) {
+    $prerelease: str-slice($version, $hyphen-index + 1);
+    $dot-index: _str-last-index($prerelease, '.');
+    $name: $prerelease;
+
+    @if ($dot-index) {
+      $number: _to-number(str-slice($prerelease, $dot-index + 1));
+      $name: if($number,
+        str-slice($prerelease, 1, $dot-index - 1),
+        str-slice($prerelease, 1)
+      );
+      $number: $number or -1;
+    }
   }
 
-  $prerelease: str-slice($version, 7);
-
   @return (
-    'name': str-slice($prerelease, 1, str-index($prerelease, '.') - 1),
-    'number': _to-number(str-slice($prerelease, -1))
+    'name': $name,
+    'number': $number,
   );
 }
 

@@ -1,13 +1,11 @@
 @include test('lte(..)') {
-  $test: lte('1.2.3', '3.2.1');
-  $expect: true;
-  @include assert-equal($test, $expect, 'Returns whether v1 is letter than or equal to v2');
+  $tests: (
+    '3.2.1': true,
+    '1.2.3': true,
+    '0.1.2': false,
+  );
 
-  $test: lte('1.2.3', '1.2.3');
-  $expect: true;
-  @include assert-equal($test, $expect, 'Returns whether v1 is letter than or equal to v2');
-
-  $test: lte('1.2.3', '0.1.2');
-  $expect: false;
-  @include assert-equal($test, $expect, 'Returns whether v1 is letter than or equal to v2');
+  @each $test, $expect in $tests {
+    @include assert-equal(lte('1.2.3', $test), $expect, 'Returns whether v1 is letter than or equal to v2.');
+  }
 }
