@@ -15,6 +15,11 @@
     "name": "sass-semver",
     "exports": "eyeglass-exports.js"
   },
+  "ignore": [
+    "test",
+    "sassdoc",
+    ".sassdocrc"
+  ],
   "devDependencies": {
     "mocha": "^2.3.4",
     "sass-true": "^2.0.3",
