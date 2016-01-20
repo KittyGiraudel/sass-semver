@@ -165,6 +165,7 @@
 ///   $not-valid: valid('a.b.c');
 ///   -> false
 @function valid($version) {
+  $version: ($version or '') + '';
   @return str-index($version, '.') != null and
     type-of(major($version)) == 'number' and
     type-of(minor($version)) == 'number' and
@@ -240,6 +241,7 @@
 ///   -> 2
 @function minor($version) {
   $chunk: str-slice($version, str-index($version, '.') + 1);
+  @if str-index($chunk, '.') == null { @return false; }
   $minor: str-slice($chunk, 1, str-index($chunk, '.') - 1);
   @return _to-number($minor);
 }
