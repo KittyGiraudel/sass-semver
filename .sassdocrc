@@ -1,0 +1,6 @@
+basePath: https://github.com/HugoGiraudel/sass-semver/tree/master/src
+display:
+    access:
+        - public
+    alias: false
+    watermark: true
