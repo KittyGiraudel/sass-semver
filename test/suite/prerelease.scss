@@ -5,6 +5,7 @@
     '1.2.3-alpha.beta' ( 'name': 'alpha.beta', 'number': -1 ),
     '1.2.3-alpha.beta.42' ( 'name': 'alpha.beta', 'number': 42 ),
     '1.2.3-alpha.0' ( 'name': 'alpha', 'number': 0 ),
+    '1.2.3-0' ( 'name': null, 'number': 0 ),
   );
 
   @each $test, $expect in $tests {
