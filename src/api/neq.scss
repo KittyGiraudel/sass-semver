@@ -1,0 +1,14 @@
+/// Return whether the first version is not equal to the second
+/// @param {String} $v1
+/// @param {String} $v2
+/// @return {Boolean}
+/// @example scss
+///   $eq: eq('1.2.3', '3.2.1');
+///   -> true
+///   $eq: eq('1.2.3', '1.2.3');
+///   -> false
+///   $eq: eq('1.2.3', '0.1.2');
+///   -> true
+@function neq($v1, $v2) {
+  @return not eq($v1, $v2);
+}

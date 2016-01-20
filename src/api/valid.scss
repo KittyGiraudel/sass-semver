@@ -1,0 +1,15 @@
+/// Return whether $version is valid SemVer
+/// @param {String} $version
+/// @return {Boolean}
+/// @example scss
+///   $valid: valid('1.2.3');
+///   -> true
+///   $not-valid: valid('a.b.c');
+///   -> false
+@function valid($version) {
+  $version: ($version or '') + '';
+  @return str-index($version, '.') != null and
+    type-of(major($version)) == 'number' and
+    type-of(minor($version)) == 'number' and
+    type-of(patch($version)) == 'number';
+}

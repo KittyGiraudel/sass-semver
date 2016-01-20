@@ -1,0 +1,9 @@
+/// Return the major version number
+/// @param {String} $version
+/// @return {Number}
+/// @example scss
+///   $major: major('1.2.3');
+///   -> 1
+@function major($version) {
+  @return _to-number(str-slice($version, 1, str-index($version, '.') - 1));
+}

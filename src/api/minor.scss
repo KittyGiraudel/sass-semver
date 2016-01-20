@@ -1,0 +1,12 @@
+/// Return the minor version number
+/// @param {String} $version
+/// @return {Number}
+/// @example scss
+///   $minor: minor('1.2.3');
+///   -> 2
+@function minor($version) {
+  $chunk: str-slice($version, str-index($version, '.') + 1);
+  @if str-index($chunk, '.') == null { @return false; }
+  $minor: str-slice($chunk, 1, str-index($chunk, '.') - 1);
+  @return _to-number($minor);
+}

@@ -1,0 +1,22 @@
+/// Format a version based on its components
+/// @access private
+/// @param {Number} $major
+/// @param {Number} $minor
+/// @param {Number} $patch
+/// @param {String} $pre-name ['']
+/// @param {Number} $pre-number [-1]
+/// @return {String}
+@function _format($major, $minor, $patch, $pre-name: '', $pre-number: -1) {
+  $release: $major + '.' + $minor + '.' + $patch;
+
+  @if ($pre-number > -1) {
+    $pre-name: $pre-name or '';
+    $release: $release
+      + '-'
+      + $pre-name
+      + if(str-length($pre-name) > 0, '.', '')
+      + $pre-number;
+  }
+
+  @return $release;
+}

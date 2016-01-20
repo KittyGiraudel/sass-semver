@@ -1,0 +1,14 @@
+/// Return whether the first version is lesser than the second
+/// @param {String} $v1
+/// @param {String} $v2
+/// @return {Boolean}
+/// @example scss
+///   $lt: lt('1.2.3', '3.2.1');
+///   -> true
+///   $lt: lt('1.2.3', '1.2.3');
+///   -> false
+///   $lt: lt('1.2.3', '0.1.2');
+///   -> false
+@function lt($v1, $v2) {
+  @return neq($v1, $v2) and not gt($v1, $v2);
+}

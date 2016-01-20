@@ -1,0 +1,11 @@
+/// Trim `$string`
+/// @access private
+/// @param {String} $string - String to trim
+/// @return {String}
+@function _trim($string) {
+  @return str-slice(
+    $string,
+    _first-index($string, 'left'),
+    _first-index($string, 'right')
+  );
+}

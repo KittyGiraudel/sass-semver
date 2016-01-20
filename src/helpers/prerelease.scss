@@ -1,0 +1,38 @@
+/// Parse the prerelease of $version
+/// @access private
+/// @param {String} $version
+/// @return {Map}
+/// @example scss
+///   $prerelease: _prerelease('1.2.3');
+///    -> ( 'name': null, 'number': -1 )
+///   $prerelease: _prerelease('1.2.3-alpha.0');
+///    -> ( 'name': 'alpha', 'number': 0 )
+@function _prerelease($version) {
+  $name: null;
+  $number: -1;
+  $hyphen-index: str-index($version, '-');
+
+  @if ($hyphen-index) {
+    $prerelease: str-slice($version, $hyphen-index + 1);
+    $dot-index: _str-last-index($prerelease, '.');
+    $name: $prerelease;
+
+    @if ($dot-index) {
+      $number: _to-number(str-slice($prerelease, $dot-index + 1));
+      $name: if($number,
+        str-slice($prerelease, 1, $dot-index - 1),
+        str-slice($prerelease, 1)
+      );
+      $number: $number or -1;
+    } @else {
+      $number: _to-number($prerelease);
+      $name: if($number, null, $prerelease);
+      $number: $number or -1;
+    }
+  }
+
+  @return (
+    'name': $name,
+    'number': $number,
+  );
+}

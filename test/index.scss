@@ -1,22 +1,23 @@
 @import 'true';
-@import '../src/index';
+@import '../dist/index';
 
 @include test-module('sass-semver') {
 
-  @import 'suite/clean';
-  @import 'suite/cmp';
-  @import 'suite/eq';
-  @import 'suite/gt';
-  @import 'suite/gte';
-  @import 'suite/inc';
-  @import 'suite/lt';
-  @import 'suite/lte';
-  @import 'suite/major';
-  @import 'suite/minor';
-  @import 'suite/neq';
-  @import 'suite/patch';
-  @import 'suite/prerelease';
-  @import 'suite/to-number';
-  @import 'suite/valid';
+  @import 'helpers/prerelease';
+  @import 'helpers/to-number';
+
+  @import 'api/clean';
+  @import 'api/cmp';
+  @import 'api/eq';
+  @import 'api/gt';
+  @import 'api/gte';
+  @import 'api/inc';
+  @import 'api/lt';
+  @import 'api/lte';
+  @import 'api/major';
+  @import 'api/minor';
+  @import 'api/neq';
+  @import 'api/patch';
+  @import 'api/valid';
 
 }

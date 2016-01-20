@@ -1,0 +1,21 @@
+/// Return whether the first version is greater than the second
+/// @param {String} $v1
+/// @param {String} $v2
+/// @return {Boolean}
+/// @example scss
+///   $gt: gt('1.2.3', '3.2.1');
+///   -> false
+///   $gt: gt('1.2.3', '1.2.3');
+///   -> false
+///   $gt: gt('1.2.3', '0.1.2');
+///   -> true
+@function gt($v1, $v2) {
+  $major-v1: major($v1);
+  $major-v2: major($v2);
+  $minor-v1: minor($v1);
+  $minor-v2: minor($v2);
+
+  @return ($major-v1 > $major-v2)
+    or ($major-v1 == $major-v2 and $minor-v1 > $minor-v2)
+    or ($major-v1 == $major-v2 and $minor-v1 == $minor-v2 and patch($v1) > patch($v2));
+}

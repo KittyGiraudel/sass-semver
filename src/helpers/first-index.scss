@@ -1,0 +1,16 @@
+/// Find first char which is not a space
+/// @access private
+/// @param {String} $string - String
+/// @param {String} $direction ['left'] - Either `left` or `right`
+/// @return {Number}
+@function _first-index($string, $direction: 'left') {
+  @for $i from 1 through str-length($string) {
+    $index: if($direction == 'left', $i, -$i);
+
+    @if str-slice($string, $index, $index) != ' ' {
+      @return $index;
+    }
+  }
+
+  @return 0;
+}

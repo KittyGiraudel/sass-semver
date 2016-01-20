@@ -1,0 +1,15 @@
+/// Remove leading `v` or `=` from $version, as well as spaces
+/// @param {String} $version
+/// @return {String}
+/// @example scss
+///   $version: clean('v1.2.3');
+///   -> '1.2.3'
+@function clean($version) {
+  $version: _trim($version);
+
+  @if index('v' '=', str-slice($version, 1, 1)) {
+    @return clean(str-slice($version, 2));
+  }
+
+  @return $version;
+}

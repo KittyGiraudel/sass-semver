@@ -1,0 +1,14 @@
+/// Return whether the first version is greater than or equal to the second
+/// @param {String} $v1
+/// @param {String} $v2
+/// @return {Boolean}
+/// @example scss
+///   $gte: gte('1.2.3', '3.2.1');
+///   -> false
+///   $gte: gte('1.2.3', '1.2.3');
+///   -> true
+///   $gte: gte('1.2.3', '0.1.2');
+///   -> true
+@function gte($v1, $v2) {
+  @return eq($v1, $v2) or gt($v1, $v2);
+}
