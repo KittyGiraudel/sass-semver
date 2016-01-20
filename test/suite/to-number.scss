@@ -1,0 +1,13 @@
+@include test('_to-number(..)') {
+  $test: _to-number('0');
+  $expect: 0;
+  @include assert-equal($test, $expect, 'Convert a string to a number.');
+
+  $test: _to-number('300');
+  $expect: 300;
+  @include assert-equal($test, $expect, 'Convert a string to a number.');
+
+  $test: _to-number('a');
+  $expect: false;
+  @include assert-equal($test, $expect, 'Convert a string to a number.');
+}

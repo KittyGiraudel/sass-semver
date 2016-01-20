@@ -1,0 +1,13 @@
+@include test('lt(..)') {
+  $test: lt('1.2.3', '3.2.1');
+  $expect: true;
+  @include assert-equal($test, $expect, 'Returns whether v1 is letter than v2');
+
+  $test: lt('1.2.3', '1.2.3');
+  $expect: false;
+  @include assert-equal($test, $expect, 'Returns whether v1 is letter than v2');
+
+  $test: lt('1.2.3', '0.1.2');
+  $expect: false;
+  @include assert-equal($test, $expect, 'Returns whether v1 is letter than v2');
+}

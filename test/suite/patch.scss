@@ -1,0 +1,9 @@
+@include test('patch(..)') {
+  $test: patch('1.2.3');
+  $expect: 3;
+  @include assert-equal($test, $expect, 'Returns the patch component of a version.');
+
+  $test: patch('1.2.30');
+  $expect: 30;
+  @include assert-equal($test, $expect, 'Returns the patch component of a version.');
+}

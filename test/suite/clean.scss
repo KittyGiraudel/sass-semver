@@ -1,0 +1,9 @@
+@include test('clean(..)') {
+  $test: clean('v1.2.3');
+  $expect: '1.2.3';
+  @include assert-equal($test, $expect, 'Gets rid off the leading `v`.');
+
+  $test: clean('=1.2.3');
+  $expect: '1.2.3';
+  @include assert-equal($test, $expect, 'Gets rid off the leading `=`.');
+}

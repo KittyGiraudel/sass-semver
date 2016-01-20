@@ -1,0 +1,9 @@
+@include test('minor(..)') {
+  $test: minor('1.2.3');
+  $expect: 2;
+  @include assert-equal($test, $expect, 'Returns the minor component of a version.');
+
+  $test: minor('1.20.3');
+  $expect: 20;
+  @include assert-equal($test, $expect, 'Returns the minor component of a version.');
+}
