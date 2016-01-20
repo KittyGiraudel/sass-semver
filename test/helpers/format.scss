@@ -1,0 +1,11 @@
+@include test('_format(..)') {
+  $tests: (
+    (1, 2, 3): '1.2.3',
+    (1, 2, 3, 'foobar'): '1.2.3',
+    (1, 2, 3, 'foobar', 42): '1.2.3-foobar.42',
+  );
+
+  @each $test, $expect in $tests {
+    @include assert-equal(_format($test...), $expect, 'Format a version from its components.');
+  }
+}
