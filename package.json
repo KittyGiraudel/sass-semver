@@ -5,7 +5,9 @@
   "description": "A lightweight semantic version parser in Sass.",
   "main": "src/index.scss",
   "scripts": {
-    "test": "mocha test/index.js"
+    "test": "mocha test/index.js",
+    "generate-doc": "sassdoc src/index.scss sassdoc/ --verbose --config=.sassdocrc && echo 'Documentation successfully generated in sassdoc/index.html'",
+    "deploy-doc": "git add sassdoc/ && git commit -m 'Compile SassDoc' --allow-empty && git subtree push --prefix sassdoc origin gh-pages && echo 'Documentation successfully deployed to http://hugogiraudel.github.io/sass-semver/'"
   },
   "license": "MIT",
   "repository": "https://github.com/HugoGiraudel/sass-semver",
