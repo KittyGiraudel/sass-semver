@@ -42,3 +42,9 @@ Check the [SassDoc-powered documentation](http://hugogiraudel.com/sass-semver).
 ```sh
 npm test
 ```
+
+## Build dist file
+
+```
+npm run build
+```
