@@ -14,8 +14,10 @@
   $major-v2: major($v2);
   $minor-v1: minor($v1);
   $minor-v2: minor($v2);
+  $patch-v1: patch($v1);
+  $patch-v2: patch($v2);
 
   @return ($major-v1 > $major-v2)
     or ($major-v1 == $major-v2 and $minor-v1 > $minor-v2)
-    or ($major-v1 == $major-v2 and $minor-v1 == $minor-v2 and patch($v1) > patch($v2));
+    or ($major-v1 == $major-v2 and $minor-v1 == $minor-v2 and $patch-v1 > $patch-v2);
 }

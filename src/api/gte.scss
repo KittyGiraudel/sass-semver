@@ -10,5 +10,5 @@
 ///   $gte: gte('1.2.3', '0.1.2');
 ///   -> true
 @function gte($v1, $v2) {
-  @return eq($v1, $v2) or gt($v1, $v2);
+  @return gt($v1, $v2) or eq($v1, $v2);
 }
