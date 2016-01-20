@@ -8,9 +8,9 @@
 /// @return {String}
 @function _format($major, $minor, $patch, $pre-name: '', $pre-number: -1) {
   $release: $major + '.' + $minor + '.' + $patch;
-  $pre-name: $pre-name or '';
 
-  @if ($pre-name or $pre-number > -1) {
+  @if ($pre-number > -1) {
+    $pre-name: $pre-name or '';
     $release: $release
       + '-'
       + $pre-name

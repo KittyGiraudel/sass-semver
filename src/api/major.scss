@@ -5,5 +5,6 @@
 ///   $major: major('1.2.3');
 ///   -> 1
 @function major($version) {
+  $version: clean($version);
   @return _to-number(str-slice($version, 1, str-index($version, '.') - 1));
 }

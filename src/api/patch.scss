@@ -5,6 +5,7 @@
 ///   $patch: patch('1.2.3');
 ///   -> 3
 @function patch($version) {
+  $version: clean($version);
   $first-chunk: str-slice($version, str-index($version, '.') + 1);
   $second-chunk: str-slice($first-chunk, str-index($first-chunk, '.') + 1);
   $end: if(str-length($second-chunk) > 1, (str-index($second-chunk, '-') or 0) - 1, 1);
