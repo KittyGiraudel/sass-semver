@@ -3,6 +3,10 @@
   "version": "1.0.3",
   "author": "Hugo Giraudel",
   "description": "A lightweight semantic version parser in Sass.",
+  "keywords": [
+    "sass",
+    "eyeglass-module"
+  ],
   "main": "src/index.scss",
   "scripts": {
     "build": "rm -rf dist/ && mkdir dist/ && cat src/**/* > dist/index.scss",
