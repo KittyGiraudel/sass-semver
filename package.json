@@ -3,11 +3,11 @@
   "version": "1.0.3",
   "author": "Hugo Giraudel",
   "description": "A lightweight semantic version parser in Sass.",
-  "main": "src/index.scss",
+  "main": "dist/index.scss",
   "scripts": {
     "build": "rm -rf dist/ && mkdir dist/ && cat src/**/* > dist/index.scss",
     "test": "mocha test/index.js",
-    "generate-doc": "sassdoc src/index.scss sassdoc/ --verbose --config=.sassdocrc && echo 'Documentation successfully generated in sassdoc/index.html'",
+    "generate-doc": "sassdoc dist/index.scss sassdoc/ --verbose --config=.sassdocrc && echo 'Documentation successfully generated in sassdoc/index.html'",
     "deploy-doc": "git add sassdoc/ && git commit -m 'Compile SassDoc' --allow-empty && git subtree push --prefix sassdoc origin gh-pages && echo 'Documentation successfully deployed to http://hugogiraudel.github.io/sass-semver/'",
     "prepublish": "npm test",
     "postpublish": "npm run build"
