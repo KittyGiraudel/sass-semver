@@ -15,8 +15,9 @@
   "license": "MIT",
   "repository": "https://github.com/HugoGiraudel/sass-semver",
   "eyeglass": {
-    "name": "sass-semver",
-    "exports": "eyeglass-exports.js"
+    "needs": "^0.8.2",
+    "sassDir": "./dist/index.scss",
+    "exports": false
   },
   "ignore": [
     "test",
