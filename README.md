@@ -8,8 +8,6 @@ npm install sass-semver
 
 ## Public API
 
-Check the [SassDoc-powered documentation](http://hugogiraudel.com/sass-semver).
-
 * `valid($version)`  
   Returns whether `$version` a is valid SemVer version.
 * `clean($version)`  
