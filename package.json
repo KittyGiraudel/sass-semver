@@ -1,7 +1,7 @@
 {
   "name": "sass-semver",
   "version": "1.0.3",
-  "author": "Hugo Giraudel",
+  "author": "Kitty Giraudel",
   "description": "A lightweight semantic version parser in Sass.",
   "main": "dist/index.scss",
   "scripts": {
@@ -13,7 +13,7 @@
     "postpublish": "npm run build"
   },
   "license": "MIT",
-  "repository": "https://github.com/HugoGiraudel/sass-semver",
+  "repository": "https://github.com/KittyGiraudel/sass-semver",
   "eyeglass": {
     "name": "sass-semver",
     "exports": "eyeglass-exports.js"
