@@ -2,7 +2,7 @@
 // @access private
 // @param {String} $value - Value to be parsed
 // @return {Number}
-// @author @HugoGiraudel - Simplified by @kaelig to only convert unsigned integers
+// @author @KittyGiraudel - Simplified by @kaelig to only convert unsigned integers
 // @link http://hugogiraudel.com/2014/01/15/sass-string-to-number/
 @function _to-number($value) {
   $result: 0;
